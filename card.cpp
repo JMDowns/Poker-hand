@@ -23,7 +23,7 @@ Card stoC (std::string cardStr) {
   std::string value;
   std::string suit;
   if (cardStr.length() == 3) {
-    if (cardStr[0] = '1' && cardStr[1] = '0') {
+    if (cardStr[0] == '1' && cardStr[1] == '0') {
       v = ten;
       value = "ten";
     }
@@ -248,11 +248,12 @@ bool isTwoPair(Card* hand, std::string& value1, std::string& value2)
   return false;
 }
 
-bool isPair(Card* hand)
+bool isPair(Card* hand, std::string& value)
 {
   for (int i = 0; i < 4; i++)
     {
       if (hand[i].v == hand[i+1].v)
+	value = hand[i].value;
 	return true;
     }
 }
@@ -280,26 +281,27 @@ int main(int argc, char** argv) {
 	}
     }
 
+  std::string suitVal, suitVal2;
   if (isRFlush(hand))
     std::cout << "Royal Flush";
   else if (isSFlush(hand))
     std::cout << "Straight Flush";
-  else if (isFourKind(hand))
-    std::cout << "Four of a kind";
+  else if (isFourKind(hand, suitVal))
+    std::cout << "Four of a kind of " + suitVal + "\n";
   else if (isFHouse(hand))
     std::cout << "Full House";
   else if (isFlush(hand))
     std::cout << "Flush";
   else if (isStraight(hand))
     std::cout << "Straight";
-  else if (isThree(hand))
-    std::cout << ""; 
-  else if (isTwoPair(hand))
-    std::cout << "Two pair\n";
-  else if (isPair(hand))
-    std::cout << "Pair\n";
+  else if (isThree(hand, suitVal))
+    std::cout << "Three of a kind of " + suitVal + "\n"; 
+  else if (isTwoPair(hand, suitVal, suitVal2))
+    std::cout << "Two pair of " + suitVal + "\n";
+  else if (isPair(hand, suitVal))
+    std::cout << "Pair of " + suitVal + "\n";
   
   else
-    std::cout << "Not two pair\n";
+    std::cout << "High card " + hand[0].value + "\n";
 }
 
