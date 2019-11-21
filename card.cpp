@@ -26,6 +26,7 @@ Card stoC (std::string cardStr) {
     if (cardStr[0] == '1' && cardStr[1] == '0') {
       v = ten;
       value = "ten";
+      return Card { v, s, value, suit };
     }
     else
       exit(-1);
@@ -90,8 +91,9 @@ Card stoC (std::string cardStr) {
     v = ace;
     value = "ace";
     }
-  else
+  else{
     exit(-1);
+  }
 
   if (cardStr[1] == 'c')
     {
@@ -239,12 +241,24 @@ bool isTwoPair(Card* hand, std::string& value1, std::string& value2)
   if (hand[0].v == hand[1].v)
     {
       if (hand[2].v == hand[3].v)
-	return true;
+	{
+	  value1 = hand[0].value;
+	  value2 = hand[2].value;
+	  return true;
+	}
       if (hand[3].v == hand[4].v)
-	return true;
+	{
+	  value1 = hand[0].value;
+	  value2 = hand[3].value;
+	  return true;
+	}
     }
   if ((hand[1].v == hand[2].v) && (hand[3].v == hand[4].v))
-    return true;
+    {
+      value1 = hand[1].value;
+      value2 = hand[3].value;
+      return true;
+    }
   return false;
 }
 
@@ -297,7 +311,7 @@ int main(int argc, char** argv) {
   else if (isThree(hand, suitVal))
     std::cout << "Three of a kind of " + suitVal + "\n"; 
   else if (isTwoPair(hand, suitVal, suitVal2))
-    std::cout << "Two pair of " + suitVal + "\n";
+    std::cout << "Two pair of " + suitVal + " and " + suitVal2 + "\n";
   else if (isPair(hand, suitVal))
     std::cout << "Pair of " + suitVal + "\n";
   
